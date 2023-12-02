@@ -60,7 +60,7 @@ def main():
     embeddings = HuggingFaceEmbeddings(model_name = 'sentence-transformers/all-MiniLM-L6-v2',
                                     model_kwargs={'device': 'cpu'})
     
-    print("embeddings created")
+    print(">> Embeddings init")
     
     db = FAISS.from_texts(text_chunks, embeddings)
 
@@ -68,27 +68,27 @@ def main():
      
     db.save_local(DB_FAISS_PATH)
     
+    print(">> Embeddings saved")
+    
     llm = CTransformers(model='./model/orca-mini-3b-gguf2-q4_0.gguf',
                     model_type="llama",
                     max_new_tokens=512,
                     temperature=0.5)
     
-    print("LLM initialized")
+    print(">> LLM init")
     
-    # PROMPT = "Provide a 2-3 sentence answer to the query based on the following sources. Be original, concise, accurate, and helpful. Cite sources as [1] or [2] or [3] after each sentence (not just the very end) to back up your answer (Ex: Correct: [1], Correct: [2][3], Incorrect: [1, 2])."
+    CONDENSE_QUESTION_PROMPT = "Provide a 2-3 sentence answer to the query based on the following sources. Be original, concise, accurate, and helpful. Cite sources as [1] or [2] or [3] after each sentence (not just the very end) to back up your answer (Ex: Correct: [1], Correct: [2][3], Incorrect: [1, 2])."
     
-    #qa = ConversationalRetrievalChain.from_llm(llm,retriever=db.as_retriever(search_kwargs={"k": 5}),BasePromptTemplate=PROMPT)
-    
-    #qa = ConversationalRetrievalChain.from_llm(llm,retriever=db.as_retriever())
+    #qa = ConversationalRetrievalChain.from_llm(llm,retriever=db.as_retriever(search_kwargs={"k": 3}),BasePromptTemplate=PROMPT)
     
     qa = ConversationalRetrievalChain.from_llm(llm,retriever=db.as_retriever(search_kwargs={"k": 3}))
     
-    print("QA init")
+    print(">> QA init")
     
     chat_history = []
-    print("Chat_History init")
+    print(">> Chat_History init")
     result = qa({"question":query, "chat_history":chat_history})
-    print("Result saved")
+    print(">> Result saved")
     print("Question: ", query)
     print("Answer: ", result['answer'])
 
