@@ -2,7 +2,6 @@ from googlesearch import search
 import requests
 from bs4 import BeautifulSoup
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain.text_splitter import CharacterTextSplitter
 from langchain.embeddings import HuggingFaceEmbeddings
 from langchain.vectorstores import FAISS
 from langchain.llms import CTransformers
@@ -25,8 +24,9 @@ def scrape_webpage(url):
         return None
 
 def main():
-#    query = input("Ask your question: ")
-    query = "What did Elon Musk said to X advertisers?"
+    #query = input("Ask your question: ")
+    
+    query = "What did Elon Musk said to advertisers?"
     search_results = get_search_results(query)
 
     scraped_texts = []
@@ -71,7 +71,7 @@ def main():
     llm = CTransformers(model='./model/orca-mini-3b-gguf2-q4_0.gguf',
                     model_type="llama",
                     max_new_tokens=512,
-                    temperature=0.2)
+                    temperature=0.5)
     
     print("LLM initialized")
     
@@ -79,15 +79,18 @@ def main():
     
     #qa = ConversationalRetrievalChain.from_llm(llm,retriever=db.as_retriever(search_kwargs={"k": 5}),BasePromptTemplate=PROMPT)
     
-    qa = ConversationalRetrievalChain.from_llm(llm,retriever=db.as_retriever())
+    #qa = ConversationalRetrievalChain.from_llm(llm,retriever=db.as_retriever())
     
-    print("QA done")
+    qa = ConversationalRetrievalChain.from_llm(llm,retriever=db.as_retriever(search_kwargs={"k": 3}))
+    
+    print("QA init")
     
     chat_history = []
-    print("Chat History created")
+    print("Chat_History init")
     result = qa({"question":query, "chat_history":chat_history})
     print("Result saved")
-    print("Response: ", result['answer'])
+    print("Question: ", query)
+    print("Answer: ", result['answer'])
 
 if __name__ == "__main__":
     main()

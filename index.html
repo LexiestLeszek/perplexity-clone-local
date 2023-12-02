@@ -14,7 +14,7 @@
       justify-content: center;
       align-items: center;
       height: 100vh;
-      background-color: #f3f3f3;
+      background-color: rgb(12,12,12);
     }
 
     .search-container {
@@ -23,29 +23,35 @@
 
     .search-bar {
       padding: 10px;
-      border: 2px solid #ccc;
+      border: 1px solid #ccc;
       border-radius: 5px;
-      width: 500px;
+      width: 550px;
+      height: 30px;
       margin-bottom: 20px;
-      font-size: 16px;
+      font-size: 20px;
       outline: none;
+      background-color: rgb(40,40,40);
+      color: white; 
     }
 
     .search-button {
-      padding: 10px 20px;
-      border: grey;
-      background-color: rgb(3, 82, 135);
-      color: rgb(236, 236, 236);
-      border-radius: 5px;
-      margin-bottom: 20px;
-      font-size: 16px;
-      cursor: pointer;
+        margin-left: 5px;
+        margin-bottom: 20px;
+        padding: 10px;
+        border: none;
+        background-color: rgb(245,193,169);
+        color: white;
+        border-radius: 50%; /* Making it a circle */
+        width: 50px; /* Equal width and height */
+        height: 50px;
+        font-size: 20px;
+        cursor: pointer;
     }
 
     .results {
       max-width: 600px;
       margin: 0 auto;
-      background-color: #fff;
+      background-color: #e0e0e0;
       border-radius: 5px;
       box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
       padding: 20px;
@@ -61,12 +67,14 @@
     .source-list li {
       margin-bottom: 5px;
     }
+
+    
   </style>
 </head>
 <body>
   <div class="search-container">
-    <input type="text" id="searchInput" class="search-bar" placeholder="Ask your question ...">
-    <button id="searchButton" class="search-button" onclick="search()">Search</button>
+    <input type="text" id="searchInput" class="search-bar" placeholder=" Ask your question ...">
+    <button id="searchButton" class="search-button" onclick="search()">🔍</button>
     <div id="results" class="results" style="display: none;">
       <h2>Results:</h2>
       <p id="answer"></p>
@@ -97,6 +105,13 @@
 
       document.getElementById('results').style.display = 'block';
     }
+
+    // Listen for 'Enter' key press on input field
+    document.getElementById('searchInput').addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') {
+        search(); // Call the search function when Enter is pressed
+        }
+    });
   </script>
 </body>
 </html>
