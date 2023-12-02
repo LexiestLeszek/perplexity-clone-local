@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LLM Search Engine</title>
+  <style>
+    /* Basic CSS for a minimalistic look */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f3f3f3;
+    }
+
+    .search-container {
+      text-align: center;
+    }
+
+    .search-bar {
+      padding: 10px;
+      border: 2px solid #ccc;
+      border-radius: 5px;
+      width: 500px;
+      margin-bottom: 20px;
+      font-size: 16px;
+      outline: none;
+    }
+
+    .search-button {
+      padding: 10px 20px;
+      border: grey;
+      background-color: rgb(3, 82, 135);
+      color: rgb(236, 236, 236);
+      border-radius: 5px;
+      margin-bottom: 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .results {
+      max-width: 600px;
+      margin: 0 auto;
+      background-color: #fff;
+      border-radius: 5px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      text-align: left;
+    }
+
+    .source-list {
+      margin-top: 10px;
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .source-list li {
+      margin-bottom: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div class="search-container">
+    <input type="text" id="searchInput" class="search-bar" placeholder="Ask your question ...">
+    <button id="searchButton" class="search-button" onclick="search()">Search</button>
+    <div id="results" class="results" style="display: none;">
+      <h2>Results:</h2>
+      <p id="answer"></p>
+      <ul id="sourceList" class="source-list"></ul>
+    </div>
+  </div>
+
+  <script>
+    function search() {
+      const query = document.getElementById('searchInput').value;
+      // Perform actions here with the query, like using APIs and fetching data
+
+      // For demonstration purposes, let's simulate a response
+      const answer = "This is a sample answer from LLM";
+      const sources = ["Source 1 - blah", "Source 2 - blah blah", "Source 3 - blah blah blah"];
+
+      // Update the results view
+      document.getElementById('answer').innerText = answer;
+
+      const sourceList = document.getElementById('sourceList');
+      sourceList.innerHTML = ''; // Clear previous sources
+
+      sources.forEach(source => {
+        const li = document.createElement('li');
+        li.textContent = source;
+        sourceList.appendChild(li);
+      });
+
+      document.getElementById('results').style.display = 'block';
+    }
+  </script>
+</body>
+</html>
